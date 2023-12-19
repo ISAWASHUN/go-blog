@@ -2,6 +2,7 @@ package api
 
 import (
 	"database/sql"
+	middlewares "go-blog/api/middleware"
 	controllers "go-blog/controller"
 	"go-blog/services"
 	"net/http"
@@ -24,6 +25,8 @@ func NewRouter(db *sql.DB) *mux.Router {
 	r.HandleFunc("/article/nice", aCon.PostNiceHandler).Methods(http.MethodPost)
 
 	r.HandleFunc("/comment", cCon.PostCommentHandler).Methods(http.MethodPost)
+
+	r.Use(middlewares.LoggingMiddleware)
 
 	return r
 }
